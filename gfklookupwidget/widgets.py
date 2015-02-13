@@ -62,8 +62,8 @@ class GfkLookupWidget(django.forms.Widget):
             # The URLs for the anchors used by showRelatedObjectLookupPopup
             # have the form of:
             #
-            #     /<app_label>/<model>/?t=<pk_field_name>
-            #     /myapp/foomodel/?t=id
+            #     /<app_label>/<model>/?_to_field=<pk_field_name>
+            #     /myapp/foomodel/?_to_field=id
             try:
                 url = django.core.urlresolvers.reverse(
                     'admin:{app}_{model}_changelist'.format(
@@ -78,9 +78,7 @@ class GfkLookupWidget(django.forms.Widget):
             # The django.contrib.admin.widgets.ForeignKeyRawIdWidget has some
             # introspection to get the query params. I don't understand it, so,
             # TODO: Work out query parameter introspection.
-            #
-            # What does 't' stand for?
-            url += '?t={0}'.format(ct_field.rel.get_related_field().name)
+            url += '?_to_field={0}'.format(ct_field.rel.get_related_field().name)
 
             urls[type_name] = url
 
